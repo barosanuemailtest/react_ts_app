@@ -18,6 +18,8 @@ test('renders without error', () => {
   expect(wrapper).toBeTruthy();
   const appComponent = wrapper.find("[data-test='component-app']")
   expect(appComponent.length).toBe(1);
+  const errorDiv = wrapper.find("[data-test='error-message']")
+  expect(errorDiv.hasClass('hidden')).toBe(true);
   // const { getByText } = render(<App />);
   // const linkElement = getByText(/learn react/i);
   // expect(linkElement).toBeInTheDocument();
@@ -42,4 +44,16 @@ test('click the button increments counter display', () => {
   button.simulate('click');
   const count = wrapper.find("[data-test='count']").text();
   expect(count).toBe("1");
-})
+});
+test('counter still displays 0', () => {
+  const count = wrapper.find("[data-test='count']").text();
+  expect(count).toBe("0");
+});
+test('clicking increment clears the error', () => {
+  const incButton = wrapper.find("[data-test='increment-button']")
+  incButton.simulate('click');
+
+  const errorDiv = wrapper.find("[data-test='error-message']")
+  const errorHasHiddenClass = errorDiv.hasClass('hidden');
+  expect(errorHasHiddenClass).toBe(true);
+});
